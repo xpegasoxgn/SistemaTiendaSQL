@@ -34,7 +34,79 @@ try
 
     Console.WriteLine(
         $"Total de productos: {productos.Count}");
+
+
+    //Buscador de Productos
+    Console.WriteLine("Ingrese el nombre del producto que desea buscar:");
+    string nombreProducto = Console.ReadLine();
+
+    bool productoEncontrado = false;
+    foreach (Producto producto in productos)
+    {
+        if (producto.Nombre.Equals(nombreProducto, StringComparison.OrdinalIgnoreCase))
+        {
+            productoEncontrado = true;
+            Console.WriteLine("PRODUCTO ENCONTRADO!");
+            Console.WriteLine($"ID: {producto.IdProducto}");
+            Console.WriteLine($"Nombre: {producto.Nombre}");
+            Console.WriteLine($"Precio: {producto.Precio}");
+            Console.WriteLine($"Stock: {producto.Stock}");
+            Console.WriteLine($"Categoria: {producto.NombreCategoria}");
+            if (producto.Stock > 0)
+            {
+                Console.WriteLine("El producto está disponible.");
+            }
+            else
+            {
+                Console.WriteLine("El producto no está disponible.");
+            }
+        }
+    }
+    if (!productoEncontrado)
+    {
+        Console.WriteLine("Producto no encontrado.");
+    }
+
+    // Permitir buscar escribiendo solamente una parte del nombre del producto Contains
+    Console.WriteLine();
+    Console.WriteLine("Ingrese parte del nombre del producto a buscar:");
+    string textoBuscar = Console.ReadLine();
+
+    bool huboCoincidencias = false;
+
+    foreach (Producto producto in productos)
+    {
+        // Contains con OrdinalIgnoreCase ignora mayúsculas y minúsculas
+        if (producto.Nombre != null && producto.Nombre.Contains(textoBuscar, StringComparison.OrdinalIgnoreCase))
+        {
+            huboCoincidencias = true;
+            Console.WriteLine("----------------------------------");
+            Console.WriteLine("PRODUCTO ENCONTRADO!");
+            Console.WriteLine($"ID: {producto.IdProducto}");
+            Console.WriteLine($"Nombre: {producto.Nombre}");
+            Console.WriteLine($"Precio: {producto.Precio}");
+            Console.WriteLine($"Stock: {producto.Stock}");
+            Console.WriteLine($"Categoria: {producto.NombreCategoria}");
+            if (producto.Stock > 0)
+            {
+                Console.WriteLine("El producto está disponible.");
+            }
+            else
+            {
+                Console.WriteLine("El producto no está disponible.");
+            }
+        }
+    }
+
+    if (!huboCoincidencias)
+    {
+        Console.WriteLine("No se encontraron productos que contengan ese término.");
+    }
+
+
+
 }
+
 catch (Exception ex)
 {
     Console.WriteLine();
