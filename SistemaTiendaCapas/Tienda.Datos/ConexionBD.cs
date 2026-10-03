@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Tienda.Datos
 {
-    internal class ConexionDB
+    internal class ConexionBD
     {
         public static string CadenaConexion { get; } = "Server=localhost;"+
-            "Database=TiendaBD;"+
+            "Database=cursoDotNet;"+
             "Trusted_Connection=True;"+
             "TrustServerCertificate=true;";
     }

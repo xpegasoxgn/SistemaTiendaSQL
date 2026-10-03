@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Tienda.Entidades
@@ -9,9 +10,10 @@ namespace Tienda.Entidades
         public int IdProducto { get; set; }
         public string Nombre { get; set; }
         public decimal Precio { get; set; }
-        public int stock { get; set; }
+        public int Stock { get; set; }
         public int IdCategoria { get; set; }
-        public string nombreCategoria { get; set; }
+        public string NombreCategoria { get; set; }
+
 
 
     }

@@ -1,8 +1,8 @@
-﻿using Tienda.Entidades;
-using Tienda.Datos;
+﻿using Tienda.Datos;
+using Tienda.Entidades;
 
-Console.WriteLine("Bienvenido a la clase de capas");
-Console.WriteLine("Esta es una aplicación de consola que demuestra la arquitectura de capas en .NET.");
+Console.WriteLine("Bienvenido a la clase de capas ");
+Console.WriteLine("Esta es una aplicación de ejemplo para demostrar el uso de capas en .NET");
 
 
 try
@@ -10,6 +10,7 @@ try
     ProductoDatos productoDatos = new ProductoDatos();
 
     List<Producto> productos = productoDatos.ListarProductos();
+
     foreach (Producto producto in productos)
     {
         Console.WriteLine();
@@ -23,15 +24,20 @@ try
             $"Precio: {producto.Precio:0.00} Bs");
 
         Console.WriteLine(
-            $"Stock: {producto.stock}");
+            $"Stock: {producto.Stock}");
 
         Console.WriteLine(
-            $"Categoría: {producto.nombreCategoria}");
+            $"Categoría: {producto.NombreCategoria}");
 
+        Console.WriteLine("----------------------------------");
     }
 
+    Console.WriteLine(
+        $"Total de productos: {productos.Count}");
 }
 catch (Exception ex)
 {
-    Console.WriteLine("Ocurrió un error al listar los productos: " + ex.Message);
+    Console.WriteLine();
+    Console.WriteLine("Ocurrió un error:");
+    Console.WriteLine(ex.Message);
 }
