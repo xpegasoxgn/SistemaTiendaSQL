@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Data;
 using Tienda.Entidades;
 using Microsoft.Data.SqlClient;
@@ -10,33 +11,42 @@ namespace Tienda.Datos
     {
         public List<Productos> ListarProductos()
         {
-            List<Productos> lista = new List<Productos>();
+            List<Productos> productos = new List<Productos>();
+            //conexion
+            using SqlConnection conexion = new SqlConnection(ConexionBD.cadenaconexion);
+            using SqlCommand comando = new SqlCommand("usp_listarProductos", conexion);
+            comando.CommandType= CommandType.StoredProcedure;
+            conexion.Open();
+            using SqlDataReader lector =
+                 comando.ExecuteReader();
 
-            using (SqlConnection cn = new SqlConnection(ConexionBD.cadenaconexion))
+            while (lector.Read())
             {
-                using (SqlCommand cmd = new SqlCommand("sp_listarproductos", cn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cn.Open();
+                Productos producto = new Productos();
 
-                    using (SqlDataReader lector = cmd.ExecuteReader())
-                    {
-                        while (lector.Read())
-                        {
-                            Productos p = new Productos();
-                            p.IdProducto = Convert.ToInt32(lector["IdProducto"]);
-                            p.Nombre = lector["Nombre"]?.ToString() ?? string.Empty;
-                            p.Precio = Convert.ToDecimal(lector["Precio"]);
-                            p.stock = Convert.ToInt32(lector["stock"]);
-                            p.NombreCategoria = lector["NombreCategoria"]?.ToString() ?? string.Empty;
+                producto.IdProducto =
+                    Convert.ToInt32(lector["IdProducto"]);
 
-                            lista.Add(p);
-                        }
-                    }
-                }
+                producto.Nombre =
+                    lector["Producto"].ToString() ?? "";
+
+                producto.Precio =
+                    Convert.ToDecimal(lector["Precio"]);
+
+                producto.Stock =
+                    Convert.ToInt32(lector["Stock"]);
+
+                producto.NombreCategoria =
+                    lector["Categoria"].ToString() ?? "";
+
+
+
+                productos.Add(producto);
             }
 
-            return lista;
+           
+
+            return productos;
         }
     }
 }
