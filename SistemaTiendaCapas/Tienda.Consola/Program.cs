@@ -7,11 +7,9 @@ Console.WriteLine("Esta es una aplicación de ejemplo para demostrar el uso de c
 
 try
 {
-    ProductoDatos productoDatos =
-            new ProductoDatos();
+    ProductoDatos productoDatos = new ProductoDatos();
 
-    List<Producto> productos =
-        productoDatos.ListarProductos();
+    List<Producto> productos = productoDatos.ListarProductos();
 
     foreach (Producto producto in productos)
     {

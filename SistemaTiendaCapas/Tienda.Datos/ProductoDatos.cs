@@ -28,7 +28,7 @@ namespace Tienda.Datos
                     Convert.ToInt32(lector["IdProducto"]);
 
                 producto.Nombre =
-                    lector["Nombre"].ToString() ?? "";
+                    lector["Producto"].ToString() ?? "";
 
                 producto.Precio =
                     Convert.ToDecimal(lector["Precio"]);
@@ -36,11 +36,10 @@ namespace Tienda.Datos
                 producto.Stock =
                     Convert.ToInt32(lector["Stock"]);
 
-                producto.IdCategoria =
-                    Convert.ToInt32(lector["IdCategoria"]);
-
                 producto.NombreCategoria =
-                    lector["NombreCategoria"].ToString() ?? "";
+                    lector["Categoria"].ToString() ?? "";
+
+
 
                 productos.Add(producto);
             }

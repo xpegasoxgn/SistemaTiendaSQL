@@ -7,6 +7,9 @@ namespace Tienda.Datos
     internal class ConexionBD
     {
 
-        public static string CadenaConexion { get; }= "Server=localhost;Database=TiendaBD;Trusted_Connection=True;TrustServerCertificate=true;";
+        public static string CadenaConexion { get; }= "Server=localhost;" +
+            "Database=TiendaBD;" +
+            "Trusted_Connection=True;" +
+            "TrustServerCertificate=true;";
     }
 }
