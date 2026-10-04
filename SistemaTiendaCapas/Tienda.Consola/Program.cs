@@ -4,7 +4,6 @@ using Tienda.Entidades;
 Console.WriteLine("Bienvenido a la clase de capas ");
 Console.WriteLine("Esta es una aplicación de ejemplo para demostrar el uso de capas en .NET");
 
-
 try
 {
     ProductoDatos productoDatos = new ProductoDatos();
@@ -103,8 +102,9 @@ try
         Console.WriteLine("============MENU DE OPCIONES============");
         Console.WriteLine("1. Listar productos");
         Console.WriteLine("2. Registrar producto");
-        Console.WriteLine("3. Salir");
-        Console.WriteLine("selecione euna ocion:   ");
+        Console.WriteLine("3. Buscar productos");
+        Console.WriteLine("4. Salir");
+        Console.Write("selecione una opcion: ");
         //Agregar la opcion para buscar productos
         opcion = Convert.ToInt32(Console.ReadLine());
         switch (opcion)
@@ -116,6 +116,9 @@ try
                 RegistrarProducto(productoDatos);
                 break;
             case 3:
+                BuscarProducto(productoDatos);
+                break;
+            case 4:
                 Console.WriteLine("Saliendo del programa...");
                 break;
 
@@ -124,7 +127,7 @@ try
                 break;
 
         }
-    } while (opcion != 0);
+    } while (opcion != 4);
 }
 catch (Exception ex)
 {
@@ -135,7 +138,6 @@ catch (Exception ex)
 
 static void MostrarProductos(ProductoDatos productoDatos)
 {
-
     List<Producto> productos = productoDatos.ListarProductos();
     Console.WriteLine("=====Productos=========");
     foreach (Producto producto in productos)
@@ -189,5 +191,35 @@ static void RegistrarProducto(ProductoDatos productoDatos)
         default:
             Console.WriteLine("Ocurrió un error al registrar el producto.");
             break;
+    }
+}
+
+static void BuscarProducto(ProductoDatos productoDatos)
+{
+    Console.WriteLine();
+    Console.WriteLine("===== Buscar Producto =====");
+    Console.Write("Ingrese parte del nombre del producto a buscar: ");
+    string textoBuscar = Console.ReadLine() ?? "";
+
+    List<Producto> productos = productoDatos.ListarProductos();
+    bool encontrado = false;
+
+    foreach (Producto producto in productos)
+    {
+        if (producto.Nombre != null && producto.Nombre.Contains(textoBuscar, StringComparison.OrdinalIgnoreCase))
+        {
+            encontrado = true;
+            Console.WriteLine("----------------------------------");
+            Console.WriteLine($"Código: {producto.IdProducto}");
+            Console.WriteLine($"Producto: {producto.Nombre}");
+            Console.WriteLine($"Precio: {producto.Precio:0.00} Bs");
+            Console.WriteLine($"Stock: {producto.Stock}");
+            Console.WriteLine($"Categoría: {producto.NombreCategoria}");
+        }
+    }
+
+    if (!encontrado)
+    {
+        Console.WriteLine("No se encontraron productos con ese criterio de búsqueda.");
     }
 }
