@@ -15,7 +15,7 @@ namespace Tienda.Datos
             //conexion
             using SqlConnection conexion = new SqlConnection(ConexionBD.CadenaConexion);
             using SqlCommand comando = new SqlCommand("usp_listarProductos", conexion);
-            comando.CommandType= CommandType.StoredProcedure;
+            comando.CommandType = CommandType.StoredProcedure;
             conexion.Open();
             using SqlDataReader lector =
                  comando.ExecuteReader();
@@ -44,9 +44,27 @@ namespace Tienda.Datos
                 productos.Add(producto);
             }
 
-           
+
 
             return productos;
+        }
+        // registrar producto
+        public int RegistrarProducto(Producto producto)
+        {
+            using SqlConnection conexion = new SqlConnection(ConexionBD.CadenaConexion);
+            using SqlCommand comando = new SqlCommand("dbo.usp_RegistrarProductos", conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.Add("@Nombre", SqlDbType.VarChar, 100).Value = producto.Nombre;
+            comando.Parameters.Add("@Precio", SqlDbType.Decimal, 18).Value = producto.Precio;
+            comando.Parameters.Add("@Stock", SqlDbType.Int).Value = producto.Stock;
+            comando.Parameters.Add("@IdCategoria", SqlDbType.Int).Value = producto.IdCategoria;
+
+            //capturar el valor que devuelve el procedimiento almacenado
+            SqlParameter parametricoRetorno = comando.Parameters.Add("@ValorRetorno", SqlDbType.Int);
+            parametricoRetorno.Direction = ParameterDirection.ReturnValue;
+            conexion.Open();
+            comando.ExecuteNonQuery();
+            return Convert.ToInt32(parametricoRetorno.Value);
         }
     }
 }

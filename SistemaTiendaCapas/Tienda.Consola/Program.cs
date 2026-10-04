@@ -37,35 +37,62 @@ try
 
 
     // buscador de productos
+    Producto nuevoProducto =new Producto();
     Console.WriteLine("Ingrese el nombre del producto que desea buscar:");
-    string nombreProducto = Console.ReadLine();
+    nuevoProducto.Nombre = Console.ReadLine()?? "";
+    Console.WriteLine("Ingrese el precio del producto:");
+    nuevoProducto.Precio = Convert.ToDecimal(Console.ReadLine());
+    Console.WriteLine("Ingrese el stock del producto:");
+    nuevoProducto.Stock = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("Ingrese el id de la categoria del producto:");
+    nuevoProducto.IdCategoria = Convert.ToInt32(Console.ReadLine());
 
-    bool productoEncontrado = false;
-    foreach (Producto producto in productos)
+
+    int resultado = productoDatos.RegistrarProducto(nuevoProducto);
+    switch(resultado)
     {
-        if (producto.Nombre.Equals(nombreProducto, StringComparison.OrdinalIgnoreCase))
-        {
-            productoEncontrado = true;
-            Console.WriteLine("PRODUCTO econtrado!!!!");
-            Console.WriteLine($"Producto encontrado: {producto.Nombre}");
-            Console.WriteLine($"Precio: {producto.Precio:0.00} Bs");
-            Console.WriteLine($"Stock: {producto.Stock}");
-            Console.WriteLine($"Categoría: {producto.NombreCategoria}");
-            if (producto.Stock > 0)
-            {
-                Console.WriteLine("El producto está disponible en stock.");
-            }
-            else
-            {
-                Console.WriteLine("El producto no está disponible en stock.");
-            }
+        case 1:
+            Console.WriteLine("Producto registrado exitosamente.");
             break;
-        }
+        case -1:
+            Console.WriteLine("Debe introducir un nombre valido.");
+            break;
+        case -2:
+            Console.WriteLine("Debe introducir un precio valido y mayor a 0.");
+            break;
+        case -3:
+            Console.WriteLine("Debe introducir un stock valido.");
+            break;
+        case -4:
+            Console.WriteLine("Debe introducir un id de categoria valido mayor a 0.");
+            break;
+        default:
+            Console.WriteLine("Ocurrió un error al registrar el producto.");
+            break;
     }
 
-    if (!productoEncontrado)
+    ProductoDatos productoDatos1 = new ProductoDatos();
+    List<Producto> productos1 = productoDatos.ListarProductos();
+
+    foreach (Producto producto in productos)
     {
-        Console.WriteLine("Producto no encontrado.");
+        Console.WriteLine();
+        Console.WriteLine(
+            $"Código: {producto.IdProducto}");
+
+        Console.WriteLine(
+            $"Producto: {producto.Nombre}");
+
+        Console.WriteLine(
+            $"Precio: {producto.Precio:0.00} Bs");
+
+        Console.WriteLine(
+            $"Stock: {producto.Stock}");
+
+        Console.WriteLine(
+            $"Categoría: {producto.NombreCategoria}");
+
+        Console.WriteLine("----------------------------------");
     }
 }
 catch (Exception ex)
