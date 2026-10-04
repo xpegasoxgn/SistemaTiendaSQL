@@ -46,5 +46,24 @@ namespace Tienda.Datos
 
             return productos;
         }
+
+        //Registrar Producto
+        public int RegistrarProducto(Producto producto)
+        { 
+            using SqlConnection conexion = new SqlConnection(ConexionBD.CadenaConexion);
+            using SqlCommand comando = new SqlCommand("dbo.usp_RegistrarProductos", conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.Add("@Nombre", SqlDbType.VarChar, 100).Value = producto.Nombre;
+            comando.Parameters.Add("@Precio", SqlDbType.Decimal, 18).Value = producto.Precio;
+            comando.Parameters.Add("@Stock", SqlDbType.Int).Value = producto.Stock;
+            comando.Parameters.Add("@IdCategoria", SqlDbType.Int).Value = producto.IdCategoria;
+
+            //Parametro de salida
+            SqlParameter parametricoRetorno = comando.Parameters.Add("@ValorRetorno", SqlDbType.Int);
+            parametricoRetorno.Direction = ParameterDirection.ReturnValue;
+            conexion.Open();
+            comando.ExecuteNonQuery();
+            return Convert.ToInt32(parametricoRetorno.Value);
+        }
     }
 }
