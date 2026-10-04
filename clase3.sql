@@ -37,6 +37,17 @@ GO
 
 EXEC usp_listarProductos;
 
+CREATE OR ALTER PROCEDURE usp_BuscarPorProducto
+	@Nombre NVARCHAR(100)
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT COUNT(*)
+	FROM Producto
+	WHERE Nombre LIKE '%' + @Nombre + '%';
+END;
+GO
 
 
 
@@ -116,5 +127,4 @@ VALUES
     @IdCategoria = 3;
 
 	select * from Producto
-
 
