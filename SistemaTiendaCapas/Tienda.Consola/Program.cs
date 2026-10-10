@@ -104,6 +104,7 @@ try
         Console.WriteLine("1. Listar productos");
         Console.WriteLine("2. Registrar producto");
         Console.WriteLine("3. Eliminar producto");
+        Console.WriteLine("4. Actualizar producto");
         Console.WriteLine("0. Salir");
         Console.WriteLine("selecione una opcion:   ");
         opcion = Convert.ToInt32(Console.ReadLine());
@@ -117,6 +118,9 @@ try
                 break;
             case 3:
                 EliminarProducto(productoDatos);
+                break;
+            case 4:
+                ActualizarProducto(productoDatos);
                 break;
             case 0:
                 Console.WriteLine("Saliendo del programa...");
@@ -178,16 +182,16 @@ static void RegistrarProducto(ProductoDatos productoDatos)
             Console.WriteLine("Producto registrado exitosamente.");
             break;
         case -1:
-            Console.WriteLine("Debe introducir un nombre valido.");
+            Console.WriteLine("Debe indicado no exite.");
             break;
         case -2:
-            Console.WriteLine("Debe introducir un precio valido y mayor a 0.");
+            Console.WriteLine("debe introducir un nombre valido.");
             break;
         case -3:
-            Console.WriteLine("Debe introducir un stock valido.");
+            Console.WriteLine("Debe introducir un precio valido.");
             break;
         case -4:
-            Console.WriteLine("Debe introducir un id de categoria valido mayor a 0.");
+            Console.WriteLine("Debe introducir stock valido.");
             break;
         default:
             Console.WriteLine("Ocurrió un error al registrar el producto.");
@@ -234,4 +238,44 @@ static void EliminarProducto(ProductoDatos productoDatos)
         Console.WriteLine("Ocurrió un error al eliminar el producto: " + ex.Message);
     }
 
+}
+
+static void ActualizarProducto(ProductoDatos productoDatos)
+{
+    Producto productoActualizado = new Producto();
+    Console.WriteLine("Ingrese el ID del producto que desea actualizar:");
+    productoActualizado.IdProducto = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("Ingrese el nuevo nombre del producto:");
+    productoActualizado.Nombre = Console.ReadLine() ?? "";
+    Console.WriteLine("Ingrese el nuevo precio del producto:");
+    productoActualizado.Precio = Convert.ToDecimal(Console.ReadLine());
+    Console.WriteLine("Ingrese el nuevo stock del producto:");
+    productoActualizado.Stock = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("Ingrese el nuevo ID de la categoría del producto:");
+    productoActualizado.IdCategoria = Convert.ToInt32(Console.ReadLine());
+    int resultado = productoDatos.ActualizarProducto(productoActualizado);
+    switch (resultado)
+    {
+        case 1:
+            Console.WriteLine("Producto registrado exitosamente.");
+            break;
+        case -1:
+            Console.WriteLine("Debe indicado no exite.");
+            break;
+        case -2:
+            Console.WriteLine("debe introducir un nombre valido.");
+            break;
+        case -3:
+            Console.WriteLine("Debe introducir un precio valido.");
+            break;
+        case -4:
+            Console.WriteLine("Debe introducir stock valido.");
+            break;
+        case -5:
+            Console.WriteLine("Debe introducir stock valido.");
+            break;
+        default:
+            Console.WriteLine("Ocurrió un error al registrar el producto.");
+            break;
+    }
 }
