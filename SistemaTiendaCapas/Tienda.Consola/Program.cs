@@ -19,7 +19,8 @@ internal class Program
                 Console.WriteLine("1. Listar productos");
                 Console.WriteLine("2. Registrar producto");
                 Console.WriteLine("3. Buscar producto");
-                Console.WriteLine("4. Salir");
+                Console.WriteLine("4. Eliminar producto");
+                Console.WriteLine("5. Salir");
                 Console.WriteLine("Selecione una oción:   ");
                 opcion = Convert.ToInt32(Console.ReadLine());
                 switch (opcion)
@@ -34,6 +35,9 @@ internal class Program
                         BuscarProducto(productoDatos);
                         break;
                     case 4:
+                        EliminarProducto(productoDatos);
+                        break;
+                    case 5:
                         Console.WriteLine("Saliendo del programa...");
                         Environment.Exit(0);
                         break;
@@ -118,7 +122,7 @@ internal class Program
                 if (producto.Nombre.Contains(nombreProducto, StringComparison.OrdinalIgnoreCase))
                 {
                     productoEncontrado = true;
-                    Console.WriteLine("PRODUCTO econtrado!!!!");
+                    Console.WriteLine($"PRODUCTO econtrado!!!! IdProducto: {producto.IdProducto}");
                     Console.WriteLine($"Producto encontrado: {producto.Nombre}");
                     Console.WriteLine($"Precio: {producto.Precio:0.00} Bs");
                     Console.WriteLine($"Stock: {producto.Stock}");
@@ -233,6 +237,42 @@ internal class Program
             Console.WriteLine();
             Console.WriteLine("Ocurrió un error:");
             Console.WriteLine(ex.Message);
+        }
+    }
+    static void EliminarProducto(ProductoDatos productoDatos)
+    {
+        Console.WriteLine();
+        Console.WriteLine("=====Eliminar Producto=========");
+        Console.WriteLine("Ingrese el ID del producto que desea eliminar:");
+        string entrada = Console.ReadLine() ?? "";
+        bool esnumero = int.TryParse(entrada, out int idProducto);
+        if (!esnumero || idProducto <= 0)
+        {
+            Console.WriteLine("Debe introducir un ID de producto valido.");
+            return;
+        }
+        Console.WriteLine("esta seguro que desea eliminar el producto? (s/n)");
+        string confirmacion = Console.ReadLine() ?? "N";
+        if (confirmacion.ToLower() != "s")
+        {
+            Console.WriteLine("Eliminación cancelada.");
+            return;
+        }
+        try
+        {
+            bool resultado = productoDatos.EliminarProducto(idProducto);
+            if (resultado)
+            {
+                Console.WriteLine("Producto eliminado exitosamente.");
+            }
+            else
+            {
+                Console.WriteLine("El producto no existe.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Ocurrió un error al eliminar el producto: " + ex.Message);
         }
     }
 }
