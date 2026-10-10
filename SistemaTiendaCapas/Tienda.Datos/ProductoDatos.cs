@@ -66,5 +66,21 @@ namespace Tienda.Datos
             comando.ExecuteNonQuery();
             return Convert.ToInt32(parametricoRetorno.Value);
         }
+
+        public bool EliminarProducto(int idProducto)
+        {
+            using SqlConnection conexion = new SqlConnection(ConexionBD.CadenaConexion);
+            using SqlCommand comando = new SqlCommand("dbo.usp_eliminarProducto", conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.Add("@IdProducto", SqlDbType.Int).Value = idProducto;
+            SqlParameter parametroResultado = comando.Parameters.Add("@Resultado", SqlDbType.Int);
+            parametroResultado.Direction = ParameterDirection.ReturnValue;
+            conexion.Open();
+            comando.ExecuteNonQuery();
+            int resultado = Convert.ToInt32(parametroResultado.Value);
+            return resultado == 1;
+
+            
+        }
     }
 }
