@@ -43,9 +43,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT COUNT(*)
+	SELECT IdProducto, Nombre AS Producto, Precio, Stock
 	FROM Producto
-	WHERE Nombre LIKE '%' + @Nombre + '%';
+	WHERE Nombre LIKE '%' + @Nombre + '%'
+	ORDER BY Nombre;
 END;
 GO
 
@@ -75,6 +76,82 @@ create or alter procedure usp_BuscarPorCategoria
 	end;
 
 go
+
+CREATE OR ALTER PROCEDURE dbo.usp_EliminarProducto
+    @IdProducto INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (SELECT 1 FROM Producto WHERE IdProducto = @IdProducto)
+    BEGIN
+        RETURN;
+    END
+
+    DELETE FROM Producto
+    WHERE IdProducto = @IdProducto;
+END;
+GO
+
+create or alter procedure dbo.usp_actualizarProducto
+	@IdProducto int,
+	@nombre Nvarchar(100),
+	@Precio Decimal(10,2),
+	@Stock int,
+	@IdCategoria int
+as 
+begin 
+	set nocount on;
+	--verificar si el producto existe 
+	if not exists
+	(
+		select 1
+		from Producto
+		where IdProducto = @IdProducto
+	)
+	begin
+		return -1
+	end;
+	--validar nombre
+	if LTRIM(rtrim(isnull(@nombre,'')))=''
+	begin 
+		return -2;
+	end;
+	--validar el precio
+	if @Precio<=0
+	begin 
+		return -3;
+	end;
+
+	--validar stock
+
+	if @Stock <0
+	begin 
+		return -4
+	end
+	--verificar si la categoria existe
+	if not exists
+	(
+		select 1
+		from Categoria
+		where IdCategoria = @IdCategoria
+	)
+	begin
+		return -5;
+	end;
+
+	update Producto
+	set
+		Nombre=@nombre,
+		Precio=@Precio,
+		Stock=@Stock,
+		IdCategoria=@IdCategoria
+	where IdProducto=@IdProducto
+
+	return 1;
+
+end;
+
 exec usp_BuscarPorCategoria
 	@IdCategoria=2;
 
@@ -127,4 +204,3 @@ VALUES
     @IdCategoria = 3;
 
 	select * from Producto
-
