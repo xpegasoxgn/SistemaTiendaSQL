@@ -102,3 +102,6 @@ namespace Tienda.Datos
         }
     }
 }
+
+
+//ejemplo para una biblioteca de clases, se puede crear una clase para manejar la conexion a la base de datos y otra clase para manejar los datos de los productos. La clase ConexionBD contiene la cadena de conexion a la base de datos y la clase ProductoDatos contiene los metodos para listar, registrar, eliminar y actualizar productos.
