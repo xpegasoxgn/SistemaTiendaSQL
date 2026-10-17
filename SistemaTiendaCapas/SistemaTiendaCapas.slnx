@@ -2,4 +2,5 @@
   <Project Path="Tienda.Consola/Tienda.Consola.csproj" />
   <Project Path="Tienda.Datos/Tienda.Datos.csproj" />
   <Project Path="Tienda.Entidades/Tienda.Entidades.csproj" />
+  <Project Path="Tienda.Presentacion/Tienda.Presentacion.csproj" Id="54c0b5a1-15a0-47f0-a1ac-61b443db9d16" />
 </Solution>
