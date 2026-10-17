@@ -190,25 +190,28 @@
             btnLimpiar.TabIndex = 15;
             btnLimpiar.Text = "Limpiar";
             btnLimpiar.UseVisualStyleBackColor = true;
+            btnLimpiar.Click += btnLimpiar_Click;
             // 
             // dgvProductos
             // 
+            dgvProductos.CellBorderStyle = DataGridViewCellBorderStyle.SingleVertical;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Location = new Point(713, 598);
+            dgvProductos.Location = new Point(747, 622);
             dgvProductos.MultiSelect = false;
             dgvProductos.Name = "dgvProductos";
             dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersWidth = 62;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(360, 225);
+            dgvProductos.Size = new Size(1171, 520);
             dgvProductos.TabIndex = 16;
+            dgvProductos.CellClick += dgvProductos_CellClick;
             // 
             // FormProductos
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(2335, 963);
+            ClientSize = new Size(2503, 1259);
             Controls.Add(dgvProductos);
             Controls.Add(btnLimpiar);
             Controls.Add(btnEliminar);
